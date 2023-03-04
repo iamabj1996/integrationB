@@ -5,7 +5,7 @@ const Web3 = require('web3');
 const app = express();
 
 
-//adding bodypaser to ger data in the output
+//adding bodypaser to get data in the output
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
@@ -19,8 +19,11 @@ const logger = (req,res,next) =>{
 app.use(logger);
 
 
-//Members api routes
+//generateKeys api router
 app.use('/api/generateKeys', require('./routes/api/members'));
+
+//owner's api routes
+app.use('/api/owner', require('./routes/api/owner'))
 
 
 
