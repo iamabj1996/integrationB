@@ -2,7 +2,6 @@ const { SHA256 } = require('crypto-js');
 const express = require('express');
 const router = express.Router();
 const Web3 = require('web3');
-const { arrayData, midServerData, midServerData2 } = require('../../smartContract/dummydata');
 const { address, abi } = require('../../smartContract/Table');
 const web3Provider = new Web3("https://goerli.infura.io/v3/89a6fb4f0505485483da7e03877fe3aa");
 
