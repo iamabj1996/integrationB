@@ -6,8 +6,8 @@ const app = express();
 
 
 //adding bodypaser to get data in the output
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({extended: false, limit:'50mb'}));
 
 const logger = (req,res,next) =>{
     console.log(`${req.protocol} : //${req.get('host')}${req.orginalUrl}`);
