@@ -87,7 +87,8 @@ router.post('/storeTableData', async(req,res)=>{
 
     const finalEncryptedData= [];
     encryptedData.map((data)=>{
-       finalEncryptedData.push( {sys_id: data.sys_id, script: SHA256(data.script + data.sys_id).toString()}) ;
+       let newData = {sys_id: data.sys_id , script: SHA256(data.script + data.sys_id).toString()};
+       finalEncryptedData.push(JSON.stringify(newData));
     })
     // compareArrays(finalEncryptedData, midServerData2);
     // console.log(finalEncryptedData);
