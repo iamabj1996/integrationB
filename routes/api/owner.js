@@ -83,8 +83,8 @@ router.get('/getEncyrptedData/:appName/:scriptType/:callerAccountAddress/:releas
 
 router.post('/storeTableData', async(req,res)=>{
     const {callerPrivateKey, appName, tableName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress} = req.body
-    console.log('body', req.body);
-    console.log('encryptedData', encryptedData);
+    // console.log('body', req.body);
+    // console.log('encryptedData', encryptedData);
     const finalEncryptedData= [];
     encryptedData.map((data)=>{
        let newData = {sys_id: data.sys_id , script: SHA256(data.script + data.sys_id).toString()};
