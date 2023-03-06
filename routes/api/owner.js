@@ -21,7 +21,7 @@ router.post('/add_client', async(req,res) =>{
         console.log('adding client')
     
         // 1 create smart contract transaction
-        const trx = tokenContract.methods.addClients(clientAddress);
+        const trx =  tokenContract.methods.addClients(clientAddress);
         // 2 calculate gas fee
         const gas = await trx.estimateGas({ from: callerAccountAddress });
         console.log('gas :>> ', gas);
