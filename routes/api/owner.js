@@ -70,7 +70,9 @@ router.get('/getEncyrptedData/:appName/:scriptType/:callerAccountAddress/:releas
     console.log(req.params);
     try {
         const trx =  await tokenContract.methods.getEncryptedData(appName,scriptType,releaseVersion ).call({from : callerAccountAddress});
-        console.log('trx',trx);
+        console.log('trx',JSON.stringify(Object.values(trx)[1]));
+        const stringArray = JSON.stringify(Object.values(trx)[1]);
+        console.log(JSON.parse(stringArray));
         res.status(400).json(({
             data : trx
         }))
@@ -191,5 +193,39 @@ function compareArrays(arr1, arr2) {
   console.log('finalResult', finalResult);
 
 }
+
+
+//the heart function of the blockchain
+router.post('/compare', async(req,res)=>{
+    try {
+        const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress} = req.body;
+        const finalEncryptedData= [];
+        encryptedData.map((data)=>{
+        let newData = {sys_id: data.sys_id , script: SHA256(data.script + data.sys_id).toString()};
+         finalEncryptedData.push(JSON.stringify(newData));
+     })
+     const trx =  await tokenContract.methods.getEncryptedData(appName,typeOfScript,releaseVersion ).call({from : callerAccountAddress});
+        console.log('trx',JSON.stringify(Object.values(trx)[1]));
+        const stringArray = JSON.stringify(Object.values(trx)[1]);
+        console.log(JSON.parse(stringArray));
+    const toBeComparedData = JSON.parse(stringArray)
+    const comparedResult =   compareArrays(finalEncryptedData, toBeComparedData);
+    res.status(200).json(({
+        data: comparedResult,
+    }))
+    // console.log(finalEncryptedData);
+    // if(!callerPrivateKey|| !appName || !tableName || !typeOfScript || !releaseVersion || !encryptedData || !callerAccountAddress){
+    //     res.status(400).json({
+    //         message:'Please include all the fields',
+    //     })
+    // }
+    // import wallet in the provider using private key of owner
+    console.log('finalEncryptedData', finalEncryptedData);
+    } catch (error) {
+        res.status(400).json({
+            message: error,
+        })
+    }
+})
 
 module.exports = router;
