@@ -155,61 +155,80 @@ router.post('/storeTableData', async(req,res)=>{
 // program to extract value as an array from an array of objects
 
 function compareArrays(arr1, arr2) {
+console.log('this ran');
+    let totalRecords ;
+    let totalRecordsMessage;
+    let sysIdChanges;
+    let scriptChangeAts;
 
-    const finalResult  = {};
+    console.log('arr', arr1.length, arr2.length);
 
     // check the length
     if(arr1.length != arr2.length) {
-        finalResult.totalRecords = false;
-        finalResult.totalRecordsMessage = arr2.length;
+        totalRecords = false;
+        totalRecordsMessage = arr2.length;
     } 
     else { 
-        finalResult.totalRecords = true;
-        finalResult.totalRecordsMessage = arr2.length
+        console.log('this ran2');
+       totalRecords = true;
+       totalRecordsMessage = arr2.length
+
+       console.log(totalRecords);
         
         // comparing each element of array 
         let sysIdChange = [];
         let scriptChangeAt = [];
         for(let i=0; i<arr1.length; i++) {
-            
-        if(Object.values(arr1[i].sys_id).toString() !==Object.values(arr2[i].sys_id).toString() ) {
+            console.log('this ran 3', JSON.parse(arr1[i]).sys_id);
+            console.log('objects', arr1[i].sys_id );
+        if(JSON.parse(arr1[i]).sys_id !== JSON.parse(arr2[i]).sys_id ) {
                 console.log('change in this sys_id', arr1[i].sys_id,arr2[i].sys_id );
-                sysIdChange.push(arr1[i].sys_id);
-            }
-            
-            
-            
-            if(Object.values(arr1[i].script).toString() !==Object.values(arr2[i].script).toString() ) {
+                sysIdChange.push(JSON.parse(arr1[i]).sys_id);
+            }    
+            sysIdChanges = sysIdChange;   
+           
+            if(JSON.parse(arr1[i]).script !== JSON.parse(arr2[i]).script ) {
                 console.log('change in the script for sysId with', arr1[i].sys_id);
-                scriptChangeAt.push(arr1[i].sys_id);
+                scriptChangeAt.push(JSON.parse(arr1[i]).sys_id);
             }
+            scriptChangeAts = scriptChangeAt;
             
           
         }
-        finalResult.changeinSysIdNumber = sysIdChange;
-        finalResult.scriptChangeAt = scriptChangeAt;
+        
   }
-
-  console.log('finalResult', finalResult);
-
+ return {
+    totalRecords,
+    totalRecordsMessage,
+    sysIdChanges,
+    scriptChangeAts,
+ }       
 }
 
 
 //the heart function of the blockchain
 router.post('/compare', async(req,res)=>{
+    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress} = req.body;
+
     try {
-        const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress} = req.body;
+        // console.log('req.body', appName);
         const finalEncryptedData= [];
+        // console.log(req.body);
         encryptedData.map((data)=>{
         let newData = {sys_id: data.sys_id , script: SHA256(data.script + data.sys_id).toString()};
          finalEncryptedData.push(JSON.stringify(newData));
      })
+    //  console.log('finalEncyptedData')
      const trx =  await tokenContract.methods.getEncryptedData(appName,typeOfScript,releaseVersion ).call({from : callerAccountAddress});
-        console.log('trx',JSON.stringify(Object.values(trx)[1]));
-        const stringArray = Object.values(trx)[1];
-        console.log(JSON.parse(stringArray));
+        // console.log('trx',Object.values(trx)[1]);
+        const stringArray = JSON.stringify(Object.values(trx)[1]);
+        // console.log(JSON.parse(stringArray));
     const toBeComparedData = JSON.parse(stringArray)
+    console.log('finalEncryptedData', finalEncryptedData);
+    console.log('tobeComparedData', toBeComparedData);
     const comparedResult =   compareArrays(finalEncryptedData, toBeComparedData);
+    console.log('compared');
+   
     res.status(200).json(({
         data: comparedResult,
     }))
@@ -220,7 +239,6 @@ router.post('/compare', async(req,res)=>{
     //     })
     // }
     // import wallet in the provider using private key of owner
-    console.log('finalEncryptedData', finalEncryptedData);
     } catch (error) {
         res.status(400).json({
             message: error,
