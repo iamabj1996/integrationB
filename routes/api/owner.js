@@ -206,7 +206,7 @@ router.post('/compare', async(req,res)=>{
      })
      const trx =  await tokenContract.methods.getEncryptedData(appName,typeOfScript,releaseVersion ).call({from : callerAccountAddress});
         console.log('trx',JSON.stringify(Object.values(trx)[1]));
-        const stringArray = JSON.stringify(Object.values(trx)[1]);
+        const stringArray = Object.values(trx)[1];
         console.log(JSON.parse(stringArray));
     const toBeComparedData = JSON.parse(stringArray)
     const comparedResult =   compareArrays(finalEncryptedData, toBeComparedData);
