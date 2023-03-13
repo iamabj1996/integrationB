@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Web3 = require('web3');
 const { address, abi } = require('../../smartContract/Table');
-const web3Provider = new Web3("https://sepolia.infura.io/v3/89a6fb4f0505485483da7e03877fe3aa");
+const web3Provider = new Web3("http://127.0.0.1:8545");
 
 const tokenContract = new web3Provider.eth.Contract(
     abi,
