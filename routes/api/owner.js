@@ -44,7 +44,7 @@ router.post('/add_client', async(req,res) =>{
           to: address,
           /** data contains the amount an recepient address params for transfer contract method */
           data,
-          gas : 90756,
+          gas,
           gasPrice : 0,
           nonce,
         };
@@ -131,7 +131,7 @@ router.post('/storeTableData', async(req,res)=>{
       to: address,
       /** data contains the amount an recepient address params for transfer contract method */
       data,
-      gas : 90756,
+      gas ,
       gasPrice : 0,
       nonce,
     };
