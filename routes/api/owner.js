@@ -12,6 +12,8 @@ const tokenContract = new web3Provider.eth.Contract(
 
 router.post('/add_client', async(req,res) =>{
 
+
+    
     const {callerPrivateKey , clientAddress , callerAccountAddress} = req.body;
     console.log(req.body);
     // import wallet in the provider using private key of owner
@@ -42,8 +44,8 @@ router.post('/add_client', async(req,res) =>{
           to: address,
           /** data contains the amount an recepient address params for transfer contract method */
           data,
-          gas,
-          gasPrice,
+          gas : 90756,
+          gasPrice : 0,
           nonce,
         };
     
@@ -129,8 +131,8 @@ router.post('/storeTableData', async(req,res)=>{
       to: address,
       /** data contains the amount an recepient address params for transfer contract method */
       data,
-      gas,
-      gasPrice,
+      gas : 90756,
+      gasPrice : 0,
       nonce,
     };
 
