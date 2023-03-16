@@ -3,24 +3,26 @@ const express = require('express');
 const router = express.Router();
 const Web3 = require('web3');
 const { address, abi } = require('../../smartContract/Table');
-const HttpProvider = "http://192.168.29.71:8545/";
-const web3Provider = new Web3(new Web3.providers.HttpProvider(HttpProvider));
 
-const tokenContract = new web3Provider.eth.Contract(
-    abi,
-    address
-    );
 
 router.post('/add_client', async(req,res) =>{
 
 
     
-    const {callerPrivateKey , clientAddress , callerAccountAddress} = req.body;
-    console.log(req.body);
-    // import wallet in the provider using private key of owner
-    web3Provider.eth.accounts.wallet.add(callerPrivateKey);
-   
+  
     try {
+        const httpProvider = "http://192.168.29.71:8545/"
+        const web3Provider = new Web3(new Web3.providers.HttpProvider(httpProvider));
+        
+        const tokenContract = new web3Provider.eth.Contract(
+            abi,
+            address
+            );
+        const {callerPrivateKey , clientAddress , callerAccountAddress} = req.body;
+        console.log(req.body);
+        // import wallet in the provider using private key of owner
+        await web3Provider.eth.accounts.wallet.add(callerPrivateKey);
+       
         console.log('adding client')
     
         // 1 create smart contract transaction
