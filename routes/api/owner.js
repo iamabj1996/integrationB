@@ -4,22 +4,7 @@ const router = express.Router();
 const Web3 = require('web3');
 const http = require('http');
 const { address, abi } = require('../../smartContract/Table');
-const options ={
-    keepAlive : true,
-    withCredentials: false,
-    timeout: 20000,
-    headers: [
-        {
-            name: 'Access-Control-Allow-Origin',
-            value: '*'
-        }
-    ],
-    agent: {
-        http: http.Agent(),
-        baseUrl: ''
-    }
-}
-const web3Provider = new Web3(new Web3.providers.HttpProvider("http://192.168.29.71:8545",options ));
+const web3Provider = new Web3(new Web3.providers.HttpProvider("https://e674-2405-201-37-784f-74e3-a6fd-7508-f326.in.ngrok.io" ));
 
 const tokenContract = new web3Provider.eth.Contract(
     abi,
