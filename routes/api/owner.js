@@ -4,7 +4,7 @@ const router = express.Router();
 const Web3 = require('web3');
 const http = require('http');
 const { address, abi } = require('../../smartContract/Table');
-const web3Provider = new Web3(new Web3.providers.HttpProvider(" https://e317-2405-201-37-784f-74e3-a6fd-7508-f326.in.ngrok.io" ));
+const web3Provider = new Web3(new Web3.providers.HttpProvider(" https://ca25-2405-201-37-784f-d491-368-2692-105.in.ngrok.io"));
 
 const tokenContract = new web3Provider.eth.Contract(
     abi,
@@ -211,7 +211,7 @@ console.log('this ran');
 
 //the heart function of the blockchain
 router.post('/compare', async(req,res)=>{
-    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress} = req.body;
+    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress, callerPrivateKey} = req.body;
 
     try {
         // console.log('req.body', appName);
@@ -231,9 +231,45 @@ router.post('/compare', async(req,res)=>{
     console.log('tobeComparedData', toBeComparedData);
     const comparedResult =   compareArrays(finalEncryptedData, toBeComparedData);
     console.log('compared');
+    const {totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts} = comparedResult; 
+    web3Provider.eth.accounts.wallet.add(callerPrivateKey);
+    // 1 create smart contract transaction
+    const trx2 = tokenContract.methods.storeClientCheck(totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts, callerAccountAddress, 5);
+    // 2 calculate gas fee
+    const gas = await trx2.estimateGas({ from: callerAccountAddress });
+    console.log('gas :>> ', gas);
+    // 3 calculate gas price
+    const gasPrice = await web3Provider.eth.getGasPrice();
+    console.log('gasPrice :>> ', gasPrice);
+    // 4 encode transaction data
+    const data = trx2.encodeABI();
+    console.log('data :>> ', data);
+    // 5 get transaction number for wallet
+    const nonce = await web3Provider.eth.getTransactionCount(callerAccountAddress);
+    console.log('nonce :>> ', nonce);
+    // 6 build transaction object with all the data
+    const trxData2 = {
+      // trx is sent from the wallet
+      from: callerAccountAddress,
+      // trx destination is the ERC20 token contract
+      to: address,
+      /** data contains the amount an recepient address params for transfer contract method */
+      data,
+      gas ,
+      gasPrice : 0,
+      nonce,
+    };
+
+    console.log('Transaction ready to be sent');
+    /** 7 send transaction, it'll be automatical/ly signed
+    because the provider has already the wallet **/
+    const receipt = await web3Provider.eth.sendTransaction(trxData2);
+    console.log(`Transaction sent, hash is ${receipt.transactionHash}`);
+    console.log('receipt', receipt);
    
     res.status(200).json(({
         data: comparedResult,
+        txHash: receipt.transactionHash
     }))
     // console.log(finalEncryptedData);
     // if(!callerPrivateKey|| !appName || !tableName || !typeOfScript || !releaseVersion || !encryptedData || !callerAccountAddress){
