@@ -211,7 +211,7 @@ console.log('this ran');
 
 //the heart function of the blockchain
 router.post('/compare', async(req,res)=>{
-    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress, callerPrivateKey, counterCeck} = req.body;
+    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress, callerPrivateKey, counterCheck} = req.body;
 
     try {
         // console.log('req.body', appName);
