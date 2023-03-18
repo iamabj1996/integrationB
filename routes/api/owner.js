@@ -211,7 +211,7 @@ console.log('this ran');
 
 //the heart function of the blockchain
 router.post('/compare', async(req,res)=>{
-    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress, callerPrivateKey} = req.body;
+    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress, callerPrivateKey, counterCeck} = req.body;
 
     try {
         // console.log('req.body', appName);
@@ -234,7 +234,7 @@ router.post('/compare', async(req,res)=>{
     const {totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts} = comparedResult; 
     web3Provider.eth.accounts.wallet.add(callerPrivateKey);
     // 1 create smart contract transaction
-    const trx2 = tokenContract.methods.storeClientCheck(totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts, callerAccountAddress, 5);
+    const trx2 = tokenContract.methods.storeClientCheck(totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts, callerAccountAddress, counterCheck);
     // 2 calculate gas fee
     const gas = await trx2.estimateGas({ from: callerAccountAddress });
     console.log('gas :>> ', gas);
