@@ -311,8 +311,8 @@ router.post('/getClientCheckResult', async(req,res)=>{
         res.status(200).json({
             data: {                
                 ...trx2,
-                sysIdChangesAt: trx['2'],
-                scriptChangesAr: trx['3'],
+                sysIdChangesAt: trx['0'],
+                scriptChangesAt: trx['1'],
             }
         })
     } catch (error) {
