@@ -211,7 +211,7 @@ console.log('this ran');
 
 //the heart function of the blockchain
 router.post('/compare', async(req,res)=>{
-    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress, callerPrivateKey} = req.body;
+    const { appName, typeOfScript, releaseVersion, encryptedData, callerAccountAddress, callerPrivateKey, tableName} = req.body;
 
     try {
         // console.log('req.body', appName);
@@ -230,11 +230,11 @@ router.post('/compare', async(req,res)=>{
     console.log('finalEncryptedData', finalEncryptedData);
     console.log('tobeComparedData', toBeComparedData);
     const comparedResult =   compareArrays(finalEncryptedData, toBeComparedData);
-    console.log('compared');
+    console.log('compared', comparedResult);
     const {totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts} = comparedResult; 
     web3Provider.eth.accounts.wallet.add(callerPrivateKey);
     // 1 create smart contract transaction
-    const trx2 = tokenContract.methods.storeClientCheck(totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts, callerAccountAddress);
+    const trx2 = tokenContract.methods.storeClientCheck(totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts, callerAccountAddress, appName, typeOfScript, releaseVersion, tableName);
     // 2 calculate gas fee
     const gas = await trx2.estimateGas({ from: callerAccountAddress });
     console.log('gas :>> ', gas);
@@ -281,6 +281,43 @@ router.post('/compare', async(req,res)=>{
     } catch (error) {
         res.status(400).json({
             message: error,
+        })
+    }
+})
+
+//check the client's checker count
+router.post('/getClientCheckerCount', async(req,res)=>{
+    const {clientAddress} = req.body;
+    try {
+        const trx =  await tokenContract.methods.checkerCount(clientAddress).call();
+        console.log('trx', trx);
+        res.status(200).json({
+            data : trx
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: error
+        })
+    }
+})
+
+//only for vendor
+router.post('/getClientCheckResult', async(req,res)=>{
+    const {clientAddress, checkerCount, callerAccountAddress} = req.body
+    try {
+        const trx =  await tokenContract.methods.getClientCheckData(clientAddress, checkerCount).call({from: callerAccountAddress});
+       const trx2 = await tokenContract.methods.clientCheckResults(checkerCount , clientAddress).call();
+       
+        res.status(200).json({
+            data: {                
+                ...trx2,
+                sysIdChangesAt: trx['2'],
+                scriptChangesAr: trx['3'],
+            }
+        })
+    } catch (error) {
+        res.status(400).json({
+            message : error
         })
     }
 })
