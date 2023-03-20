@@ -23,7 +23,7 @@ router.post('/add_client', async(req,res) =>{
     try {
         console.log('adding client')
     
-        // 1 create smart contract transaction
+        //   create smart contract transaction
         const trx =  tokenContract.methods.addClients(clientAddress);
         // 2 calculate gas fee
         const gas = await trx.estimateGas({ from: callerAccountAddress });
@@ -223,7 +223,7 @@ router.post('/compare', async(req,res)=>{
      })
      //  console.log('finalEncyptedData')
      const trx =  await tokenContract.methods.getEncryptedData(appName,typeOfScript,releaseVersion ).call({from : callerAccountAddress});
-       // console.log('trx',Object.values(trx)[1]);
+        // console.log('trx',Object.values(trx)[1]);
         const stringArray = JSON.stringify(Object.values(trx)[1]);
         // console.log(JSON.parse(stringArray));
     const toBeComparedData = JSON.parse(stringArray)
