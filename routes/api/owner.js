@@ -4,7 +4,7 @@ const router = express.Router();
 const Web3 = require('web3');
 const http = require('http');
 const { address, abi } = require('../../smartContract/Table');
-const web3Provider = new Web3(new Web3.providers.HttpProvider("https://df46-2405-201-37-784f-1e7-8a3-c53-cb0f.ngrok-free.app"));
+const web3Provider = new Web3("https://670d-2405-201-37-784f-1e7-8a3-c53-cb0f.ngrok-free.app");
 
 const tokenContract = new web3Provider.eth.Contract(
     abi,
@@ -24,7 +24,7 @@ router.post('/add_client', async(req,res) =>{
         console.log('adding client')
     
         //   create smart contract transaction
-        const trx =   tokenContract.methods.addClients(clientAddress);
+        const trx =  await tokenContract.methods.addClients(clientAddress);
         console.log('this ran again');
         // 2 calculate gas fee
         const gas = await trx.estimateGas({ from: callerAccountAddress });
