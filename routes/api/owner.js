@@ -4,7 +4,7 @@ const router = express.Router();
 const Web3 = require('web3');
 const http = require('http');
 const { address, abi } = require('../../smartContract/Table');
-const web3Provider = new Web3(new Web3.providers.HttpProvider(" https://0305-2405-201-37-784f-f4cd-c75d-538-f8bb.in.ngrok.io"));
+const web3Provider = new Web3("https://993d-2405-201-37-784f-1e7-8a3-c53-cb0f.ngrok-free.app");
 
 const tokenContract = new web3Provider.eth.Contract(
     abi,
@@ -16,15 +16,16 @@ router.post('/add_client', async(req,res) =>{
 
     
     const {callerPrivateKey , clientAddress , callerAccountAddress} = req.body;
-    console.log(req.body);
+    console.log('body', req.body);
     // import wallet in the provider using private key of owner
-    web3Provider.eth.accounts.wallet.add(callerPrivateKey);
+     web3Provider.eth.accounts.wallet.add(callerPrivateKey);
    
     try {
         console.log('adding client')
     
         //   create smart contract transaction
-        const trx =  tokenContract.methods.addClients(clientAddress);
+        const trx =   tokenContract.methods.addClients(clientAddress);
+        console.log('this ran again');
         // 2 calculate gas fee
         const gas = await trx.estimateGas({ from: callerAccountAddress });
         console.log('gas :>> ', gas);
@@ -50,7 +51,7 @@ router.post('/add_client', async(req,res) =>{
           nonce,
         };
     
-        console.log('Transaction ready to be sent');
+        console.log('Transaction ready to be sent', trxData);
         /** 7 send transaction, it'll be automatically signed
         because the provider has already the wallet **/
         const receipt = await web3Provider.eth.sendTransaction(trxData);
