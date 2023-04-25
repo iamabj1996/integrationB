@@ -4,7 +4,7 @@ const router = express.Router();
 const Web3 = require('web3');
 const http = require('http');
 const { address, abi } = require('../../smartContract/Table');
-const web3Provider = new Web3(new Web3.providers.HttpProvider("https://cf3d-2405-201-37-784f-41d1-9635-e547-9b06.ngrok-free.app"));
+const web3Provider = new Web3(new Web3.providers.HttpProvider("https://59d2-2405-201-37-784f-41d1-9635-e547-9b06.ngrok-free.app"));
 
 const tokenContract = new web3Provider.eth.Contract(
     abi,
