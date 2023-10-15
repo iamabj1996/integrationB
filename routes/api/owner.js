@@ -199,6 +199,9 @@ router.post('/storeTableData', async (req, res) => {
 	// 		message: error,
 	// 	});
 	// }
+	res.json({
+		data: 'Data sent successfully',
+	});
 });
 
 // program to extract value as an array from an array of objects
