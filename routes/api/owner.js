@@ -107,7 +107,7 @@ router.post('/storeTableData', async (req, res) => {
 	console.log('body', req.body);
 	console.log('finalPayload', finalPayload);
 	const parsedPayload = JSON.parse(finalPayload);
-	const { scriptInclude, clientScripts, businessRules } = finalPayload;
+	const { scriptInclude, clientScripts, businessRules } = parsedPayload;
 
 	//creating encrypted scriptInclude
 	const finalEncryptedSI = [];
