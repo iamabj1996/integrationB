@@ -93,6 +93,7 @@ router.get(
 	}
 );
 
+//store table
 router.post('/storeTableData', async (req, res) => {
 	const {
 		applicationName,
