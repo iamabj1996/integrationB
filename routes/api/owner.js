@@ -95,15 +95,15 @@ router.get(
 
 //store tablesss
 router.post('/storeTableData', async (req, res) => {
-	const {
-		applicationName,
-		applicationSysId,
-		releaseLabel,
-		finalPayload,
-		totalScriptIncludes,
-		totalClientScripts,
-		totalBusinessRules,
-	} = req.body;
+	// const {
+	// 	applicationName,
+	// 	applicationSysId,
+	// 	releaseLabel,
+	// 	finalPayload,
+	// 	totalScriptIncludes,
+	// 	totalClientScripts,
+	// 	totalBusinessRules,
+	// } = req.body;
 	console.log('body', req.body);
 	console.log('finalPayload', finalPayload);
 	const parsedPayload = JSON.parse(finalPayload);
