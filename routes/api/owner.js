@@ -106,7 +106,7 @@ router.post('/storeTableData', async (req, res) => {
 		totalClientScripts,
 		totalBusinessRules,
 	} = req.body;
-	console.log('body', req.body);
+	console.log('scriptIncludes', JSON.stringify(scriptIncludeList));
 
 	//creating encrypted scriptInclude
 	const finalEncryptedSI = [];
