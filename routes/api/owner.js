@@ -95,23 +95,22 @@ router.get(
 
 //store tablesss
 router.post('/storeTableData', async (req, res) => {
-	// const {
-	// 	applicationName,
-	// 	applicationSysId,
-	// 	releaseLabel,
-	// 	finalPayload,
-	// 	totalScriptIncludes,
-	// 	totalClientScripts,
-	// 	totalBusinessRules,
-	// } = req.body;
+	const {
+		applicationName,
+		applicationSysId,
+		releaseLabel,
+		scriptIncludeList,
+		clientScriptsList,
+		businessRulesList,
+		totalScriptIncludes,
+		totalClientScripts,
+		totalBusinessRules,
+	} = req.body;
 	console.log('body', req.body);
-	console.log('finalPayload', finalPayload);
-	const parsedPayload = JSON.parse(finalPayload);
-	const { scriptInclude, clientScripts, businessRules } = parsedPayload;
 
 	//creating encrypted scriptInclude
 	const finalEncryptedSI = [];
-	scriptInclude.map((data) => {
+	scriptIncludeList.map((data) => {
 		let newData = {
 			sysId: data.sysId,
 			script: SHA256(data.script + data.sysId).toString(),
@@ -121,7 +120,7 @@ router.post('/storeTableData', async (req, res) => {
 
 	//creating encrypted clientScripts
 	const finalEncryptedCS = [];
-	clientScripts.map((data) => {
+	clientScriptsList.map((data) => {
 		let newData = {
 			sysId: data.sysId,
 			script: SHA256(data.script + data.sysId).toString(),
@@ -131,7 +130,7 @@ router.post('/storeTableData', async (req, res) => {
 
 	//creating encrypted businessRules
 	const finalEncryptedBR = [];
-	businessRules.map((data) => {
+	businessRulesList.map((data) => {
 		let newData = {
 			sysId: data.sysId,
 			script: SHA256(data.script + data.sysId).toString(),
