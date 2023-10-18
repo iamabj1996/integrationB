@@ -107,6 +107,8 @@ router.post('/storeTableData', async (req, res) => {
 		totalBusinessRules,
 	} = req.body;
 
+	console.log('scriptIncludeString', JSON.stringify(scriptIncludeList));
+
 	const scriptIncludeListStrigify = JSON.stringify(scriptIncludeList);
 	const clientScriptsListStrigify = JSON.stringify(clientScriptsList);
 	const businessRulesListStrigify = JSON.stringify(businessRulesList);
