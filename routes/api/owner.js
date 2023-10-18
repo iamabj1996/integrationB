@@ -115,17 +115,18 @@ router.post('/storeTableData', async (req, res) => {
 
 	//creating encrypted scriptInclude
 	const finalEncryptedSI = [];
-	scriptIncludeListStrigify.map((data) => {
+	scriptIncludeList.map((data) => {
 		let newData = {
 			sysId: data.sysId,
 			script: SHA256(data.script + data.sysId).toString(),
 		};
+		console.log('newdATA', newData);
 		finalEncryptedSI.push(JSON.stringify(newData));
 	});
 
 	//creating encrypted clientScripts
 	const finalEncryptedCS = [];
-	businessRulesListStrigify.map((data) => {
+	clientScriptsList.map((data) => {
 		let newData = {
 			sysId: data.sysId,
 			script: SHA256(data.script + data.sysId).toString(),
@@ -135,7 +136,7 @@ router.post('/storeTableData', async (req, res) => {
 
 	//creating encrypted businessRules
 	const finalEncryptedBR = [];
-	JSON.parse(businessRulesList).map((data) => {
+	businessRulesList.map((data) => {
 		let newData = {
 			sysId: data.sysId,
 			script: SHA256(data.script + data.sysId).toString(),
