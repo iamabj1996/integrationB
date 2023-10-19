@@ -105,11 +105,9 @@ router.post('/storeTableData', async (req, res) => {
 		totalScriptIncludes,
 		totalClientScripts,
 		totalBusinessRules,
+		callerPrivateKey,
+		callerAccountAddress,
 	} = req.body;
-
-	const scriptIncludeListStrigify = JSON.stringify(scriptIncludeList);
-	const clientScriptsListStrigify = JSON.stringify(clientScriptsList);
-	const businessRulesListStrigify = JSON.stringify(businessRulesList);
 
 	//creating encrypted scriptInclude
 	const finalEncryptedSI = [];
@@ -147,64 +145,64 @@ router.post('/storeTableData', async (req, res) => {
 
 	//@need to check dont forget
 
-	// web3Provider.eth.accounts.wallet.add(callerPrivateKey);
-	// try {
-	// 	console.log('adding tableData to blockchain');
+	web3Provider.eth.accounts.wallet.add(callerPrivateKey);
+	try {
+		console.log('adding tableData to blockchain');
 
-	// 	// 1 create smart contract transaction
-	// 	const trx = tokenContract.methods.storeEncryptedData(
-	// 		appName,
-	// 		tableName,
-	// 		typeOfScript,
-	// 		releaseVersion,
-	// 		finalEncryptedData
-	// 	);
-	// 	// 2 calculate gas fee
-	// 	const gas = await trx.estimateGas({ from: callerAccountAddress });
-	// 	console.log('gas :>> ', gas);
-	// 	// 3 calculate gas price
-	// 	const gasPrice = await web3Provider.eth.getGasPrice();
-	// 	console.log('gasPrice :>> ', gasPrice);
-	// 	// 4 encode transaction data
-	// 	const data = trx.encodeABI();
-	// 	console.log('data :>> ', data);
-	// 	// 5 get transaction number for wallet
-	// 	const nonce = await web3Provider.eth.getTransactionCount(
-	// 		callerAccountAddress
-	// 	);
-	// 	console.log('nonce :>> ', nonce);
-	// 	// 6 build transaction object with all the data
-	// 	const trxData = {
-	// 		// trx is sent from the wallet
-	// 		from: callerAccountAddress,
-	// 		// trx destination is the ERC20 token contract
-	// 		to: address,
-	// 		/** data contains the amount an recepient address params for transfer contract method */
-	// 		data,
-	// 		gas,
-	// 		gasPrice: 0,
-	// 		nonce,
-	// 	};
+		// 1 create smart contract transaction
+		const trx = tokenContract.methods.storeEncryptedData(
+			applicationName,
+			releaseLabel,
+			finalEncryptedSI,
+			finalEncryptedCS,
+			finalEncryptedBR,
+			totalScriptIncludes,
+			totalClientScripts,
+			totalBusinessRules
+		);
+		// 2 calculate gas fee
+		const gas = await trx.estimateGas({ from: callerAccountAddress });
+		console.log('gas :>> ', gas);
+		// 3 calculate gas price
+		const gasPrice = await web3Provider.eth.getGasPrice();
+		console.log('gasPrice :>> ', gasPrice);
+		// 4 encode transaction data
+		const data = trx.encodeABI();
+		console.log('data :>> ', data);
+		// 5 get transaction number for wallet
+		const nonce = await web3Provider.eth.getTransactionCount(
+			callerAccountAddress
+		);
+		console.log('nonce :>> ', nonce);
+		// 6 build transaction object with all the data
+		const trxData = {
+			// trx is sent from the wallet
+			from: callerAccountAddress,
+			// trx destination is the ERC20 token contract
+			to: address,
+			/** data contains the amount an recepient address params for transfer contract method */
+			data,
+			gas,
+			gasPrice: 0,
+			nonce,
+		};
 
-	// 	console.log('Transaction ready to be sent');
-	// 	/** 7 send transaction, it'll be automatical/ly signed
-	// because the provider has already the wallet **/
-	// 	const receipt = await web3Provider.eth.sendTransaction(trxData);
-	// 	console.log(`Transaction sent, hash is ${receipt.transactionHash}`);
-	// 	console.log('receipt', receipt);
+		console.log('Transaction ready to be sent');
+		/** 7 send transaction, it'll be automatical/ly signed
+	because the provider has already the wallet **/
+		const receipt = await web3Provider.eth.sendTransaction(trxData);
+		console.log(`Transaction sent, hash is ${receipt.transactionHash}`);
+		console.log('receipt', receipt);
 
-	// 	res.json({
-	// 		data: receipt,
-	// 	});
-	// } catch (error) {
-	// 	console.error('Error in transferTokens >', error);
-	// 	res.status(400).json({
-	// 		message: error,
-	// 	});
-	// }
-	res.json({
-		data: 'Data sent successfully',
-	});
+		res.json({
+			data: receipt,
+		});
+	} catch (error) {
+		console.error('Error in transferTokens >', error);
+		res.status(400).json({
+			message: error,
+		});
+	}
 });
 
 // program to extract value as an array from an array of objects
