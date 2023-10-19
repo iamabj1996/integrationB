@@ -109,6 +109,9 @@ router.post('/storeTableData', async (req, res) => {
 		callerAccountAddress,
 	} = req.body;
 
+	console.log('callerAccountPrivateKey', callerPrivateKey);
+	console.log('callerAccAddre', callerAccountAddress);
+
 	//creating encrypted scriptInclude
 	const finalEncryptedSI = [];
 	scriptIncludeList.map((data) => {
