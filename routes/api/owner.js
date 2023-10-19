@@ -109,6 +109,9 @@ router.post('/storeTableData', async (req, res) => {
 		callerAccountAddress,
 	} = req.body;
 
+	console.log('callerAccountPrivateKey', callerPrivateKey);
+	console.log('callerAccAddre', callerAccountAddress);
+
 	//creating encrypted scriptInclude
 	const finalEncryptedSI = [];
 	scriptIncludeList.map((data) => {
@@ -164,10 +167,12 @@ router.post('/storeTableData', async (req, res) => {
 		// console.log('gasPrice :>> ', gasPrice);
 		// 4 encode transaction data
 		const data = trx.encodeABI();
+		console.log('data :>> ', data);
 		// 5 get transaction number for wallet
 		const nonce = await web3Provider.eth.getTransactionCount(
 			callerAccountAddress
 		);
+		console.log('nonce :>> ', nonce);
 		// 6 build transaction object with all the data
 		const trxData = {
 			// trx is sent from the wallet
@@ -181,9 +186,11 @@ router.post('/storeTableData', async (req, res) => {
 			nonce,
 		};
 
+		console.log('Transaction ready to be sent');
 		/** 7 send transaction, it'll be automatical/ly signed
 	because the provider has already the wallet **/
 		const receipt = await web3Provider.eth.sendTransaction(trxData);
+		console.log(`Transaction sent, hash is ${receipt.transactionHash}`);
 		console.log('receipt', receipt);
 
 		res.json({
