@@ -185,7 +185,7 @@ router.post('/storeTableData', async (req, res) => {
 			to: address,
 			/** data contains the amount an recepient address params for transfer contract method */
 			data,
-			gas: 100000000,
+			gas: 8000000,
 			gasPrice: 0,
 			nonce,
 		};
