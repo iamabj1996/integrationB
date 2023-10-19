@@ -160,10 +160,10 @@ router.post('/storeTableData', async (req, res) => {
 			2
 		);
 		// // 2 calculate gas fee
-		// const gas = await trx.estimateGas({ from: callerAccountAddress });
+		const gas = await trx.estimateGas({ from: callerAccountAddress });
 		// // console.log('gas :>> ', gas);
 		// // // 3 calculate gas price
-		// // const gasPrice = await web3Provider.eth.getGasPrice();
+		const gasPrice = await web3Provider.eth.getGasPrice();
 		// console.log('gasPrice :>> ', gasPrice);
 		// 4 encode transaction data
 		const data = trx.encodeABI();
@@ -181,7 +181,7 @@ router.post('/storeTableData', async (req, res) => {
 			to: address,
 			/** data contains the amount an recepient address params for transfer contract method */
 			data,
-			gas: 8000000,
+			gas,
 			gasPrice: 0,
 			nonce,
 		};
