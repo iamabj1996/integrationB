@@ -153,7 +153,7 @@ router.post('/storeTableData', async (req, res) => {
 		console.log('adding tableData to blockchain');
 
 		// 1 create smart contract transaction
-		const trx = tokenContract.methods.storeEncryptedData(
+		const trx = tokenContract.methods.addApplicationData(
 			applicationName,
 			releaseLabel,
 			finalEncryptedSI,
