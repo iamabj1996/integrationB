@@ -159,9 +159,9 @@ router.post('/storeTableData', async (req, res) => {
 			finalEncryptedSI,
 			finalEncryptedCS,
 			finalEncryptedBR,
-			totalScriptIncludes,
-			totalClientScripts,
-			totalBusinessRules
+			1,
+			2,
+			2
 		);
 		// 2 calculate gas fee
 		const gas = await trx.estimateGas({ from: callerAccountAddress });
