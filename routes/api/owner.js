@@ -266,7 +266,7 @@ router.post('/compare', async (req, res) => {
 	} = req.body;
 
 	try {
-		// console.log('req.body', appName);
+		console.log('req.body', appName);
 
 		//creating encrypted scriptInclude
 		const finalEncryptedSI = [];
@@ -298,7 +298,7 @@ router.post('/compare', async (req, res) => {
 			finalEncryptedBR.push(JSON.stringify(newData));
 		});
 
-		//  console.log('finalEncyptedData')
+		console.log('finalEncyptedData', finalEncryptedBR);
 		const trx = await tokenContract.methods
 			.getApplicationByReleaseAndName(releaseLabel, appName)
 			.call({ from: callerAccountAddress });
@@ -310,8 +310,8 @@ router.post('/compare', async (req, res) => {
 		console.log('finalEncryptedData', finalEncryptedSI);
 		console.log('tobeComparedData', toBeComparedDataSI);
 		const comparedResultForSI = compareArrays(
-			finalEncryptedData,
-			toBeComparedData
+			finalEncryptedSI,
+			toBeComparedDataSI
 		);
 		console.log('compared', comparedResultForSI);
 		const { totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts } =
