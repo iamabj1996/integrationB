@@ -308,10 +308,13 @@ router.post('/compare', async (req, res) => {
 		const toBeComparedDataSI = JSON.parse(stringArray);
 		console.log('finalEncryptedData', finalEncryptedSI);
 		console.log('tobeComparedData', toBeComparedDataSI);
-		const comparedResult = compareArrays(finalEncryptedData, toBeComparedData);
-		console.log('compared', comparedResult);
+		const comparedResultForSI = compareArrays(
+			finalEncryptedData,
+			toBeComparedData
+		);
+		console.log('compared', comparedResultForSI);
 		const { totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts } =
-			comparedResult;
+			comparedResultForSI;
 		// 	web3Provider.eth.accounts.wallet.add(callerPrivateKey);
 		// 	// 1 create smart contract transaction
 		// 	const trx2 = await tokenContract.methods.storeClientCheck(
@@ -360,7 +363,7 @@ router.post('/compare', async (req, res) => {
 		// 	console.log('receipt', receipt);
 
 		res.status(200).json({
-			data: comparedResult,
+			data: comparedResultForSI,
 			// txHash: receipt.transactionHash,
 		});
 		// console.log(finalEncryptedData);
