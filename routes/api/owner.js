@@ -298,7 +298,6 @@ router.post('/compare', async (req, res) => {
 			finalEncryptedBR.push(JSON.stringify(newData));
 		});
 
-		console.log('finalEncyptedData', finalEncryptedBR);
 		const trx = await tokenContract.methods
 			.getApplicationByReleaseAndName(releaseLabel, appName)
 			.call({ from: callerAccountAddress });
@@ -307,13 +306,30 @@ router.post('/compare', async (req, res) => {
 		const stringArraySI = JSON.stringify(Object.values(trx)[2]);
 		// console.log(JSON.parse(stringArray));
 		const toBeComparedDataSI = JSON.parse(stringArraySI);
-		console.log('finalEncryptedData', finalEncryptedSI);
-		console.log('tobeComparedData', toBeComparedDataSI);
 		const comparedResultForSI = compareArrays(
 			finalEncryptedSI,
 			toBeComparedDataSI
 		);
-		console.log('compared', comparedResultForSI);
+		console.log('compared FOR SI', comparedResultForSI);
+
+		const stringArrayCS = JSON.stringify(Object.values(trx1)[3]);
+		// console.log(JSON.parse(stringArray));
+		const toBeComparedDataCS = JSON.parse(stringArrayCS);
+		const comparedResultForCS = compareArrays(
+			finalEncryptedCS,
+			toBeComparedDataCS
+		);
+		console.log('compared FOR CS', comparedResultForCS);
+
+		const stringArrayBR = JSON.stringify(Object.values(trx1)[4]);
+		// console.log(JSON.parse(stringArray));
+		const toBeComparedDataBR = JSON.parse(stringArrayBR);
+		const comparedResultForBR = compareArrays(
+			finalEncryptedBR,
+			toBeComparedDataBR
+		);
+		console.log('compared FOR CS', comparedResultForBR);
+
 		const { totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts } =
 			comparedResultForSI;
 		// 	web3Provider.eth.accounts.wallet.add(callerPrivateKey);
