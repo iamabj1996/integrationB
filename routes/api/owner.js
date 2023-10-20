@@ -256,90 +256,112 @@ function compareArrays(arr1, arr2) {
 //the heart function of the blockchain
 router.post('/compare', async (req, res) => {
 	const {
+		releaseLabel,
 		appName,
-		typeOfScript,
-		releaseVersion,
-		encryptedData,
+		scriptIncludeList,
+		clientScriptsList,
+		businessRulesList,
 		callerAccountAddress,
 		callerPrivateKey,
-		tableName,
 	} = req.body;
 
 	try {
 		// console.log('req.body', appName);
-		const finalEncryptedData = [];
-		// console.log(req.body);
-		encryptedData.map((data) => {
+
+		//creating encrypted scriptInclude
+		const finalEncryptedSI = [];
+		scriptIncludeList.map((data) => {
 			let newData = {
-				sys_id: data.sys_id,
-				script: SHA256(data.script + data.sys_id).toString(),
+				sysId: data.sysId,
+				script: SHA256(data.script + data.sysId).toString(),
 			};
-			finalEncryptedData.push(JSON.stringify(newData));
+			finalEncryptedSI.push(JSON.stringify(newData));
 		});
+
+		//creating encrypted clientScripts
+		const finalEncryptedCS = [];
+		clientScriptsList.map((data) => {
+			let newData = {
+				sysId: data.sysId,
+				script: SHA256(data.script + data.sysId).toString(),
+			};
+			finalEncryptedCS.push(JSON.stringify(newData));
+		});
+
+		//creating encrypted businessRules
+		const finalEncryptedBR = [];
+		businessRulesList.map((data) => {
+			let newData = {
+				sysId: data.sysId,
+				script: SHA256(data.script + data.sysId).toString(),
+			};
+			finalEncryptedBR.push(JSON.stringify(newData));
+		});
+
 		//  console.log('finalEncyptedData')
 		const trx = await tokenContract.methods
-			.getEncryptedData(appName, typeOfScript, releaseVersion)
+			.getApplicationByReleaseAndName(releaseLabel, appName)
 			.call({ from: callerAccountAddress });
 		// console.log('trx',Object.values(trx)[1]);
-		const stringArray = JSON.stringify(Object.values(trx)[1]);
+		const stringArraySI = JSON.stringify(Object.values(trx)[2]);
 		// console.log(JSON.parse(stringArray));
-		const toBeComparedData = JSON.parse(stringArray);
-		console.log('finalEncryptedData', finalEncryptedData);
-		console.log('tobeComparedData', toBeComparedData);
+		const toBeComparedDataSI = JSON.parse(stringArray);
+		console.log('finalEncryptedData', finalEncryptedSI);
+		console.log('tobeComparedData', toBeComparedDataSI);
 		const comparedResult = compareArrays(finalEncryptedData, toBeComparedData);
 		console.log('compared', comparedResult);
 		const { totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts } =
 			comparedResult;
-		web3Provider.eth.accounts.wallet.add(callerPrivateKey);
-		// 1 create smart contract transaction
-		const trx2 = await tokenContract.methods.storeClientCheck(
-			totalRecords,
-			totalRecordsMessage,
-			sysIdChanges,
-			scriptChangeAts,
-			callerAccountAddress,
-			appName,
-			typeOfScript,
-			releaseVersion,
-			tableName
-		);
-		// 2 calculate gas fee
-		const gas = await trx2.estimateGas({ from: callerAccountAddress });
-		console.log('gas :>> ', gas);
-		// 3 calculate gas price
-		const gasPrice = await web3Provider.eth.getGasPrice();
-		console.log('gasPrice :>> ', gasPrice);
-		// 4 encode transaction data
-		const data = trx2.encodeABI();
-		console.log('data :>> ', data);
-		// 5 get transaction number for wallet
-		const nonce = await web3Provider.eth.getTransactionCount(
-			callerAccountAddress
-		);
-		console.log('nonce :>> ', nonce);
-		// 6 build transaction object with all the data
-		const trxData2 = {
-			// trx is sent from the wallet
-			from: callerAccountAddress,
-			// trx destination is the ERC20 token contract
-			to: address,
-			/** data contains the amount an recepient address params for transfer contract method */
-			data,
-			gas,
-			gasPrice: 0,
-			nonce,
-		};
+		// 	web3Provider.eth.accounts.wallet.add(callerPrivateKey);
+		// 	// 1 create smart contract transaction
+		// 	const trx2 = await tokenContract.methods.storeClientCheck(
+		// 		totalRecords,
+		// 		totalRecordsMessage,
+		// 		sysIdChanges,
+		// 		scriptChangeAts,
+		// 		callerAccountAddress,
+		// 		appName,
+		// 		typeOfScript,
+		// 		releaseVersion,
+		// 		tableName
+		// 	);
+		// 	// 2 calculate gas fee
+		// 	const gas = await trx2.estimateGas({ from: callerAccountAddress });
+		// 	console.log('gas :>> ', gas);
+		// 	// 3 calculate gas price
+		// 	const gasPrice = await web3Provider.eth.getGasPrice();
+		// 	console.log('gasPrice :>> ', gasPrice);
+		// 	// 4 encode transaction data
+		// 	const data = trx2.encodeABI();
+		// 	console.log('data :>> ', data);
+		// 	// 5 get transaction number for wallet
+		// 	const nonce = await web3Provider.eth.getTransactionCount(
+		// 		callerAccountAddress
+		// 	);
+		// 	console.log('nonce :>> ', nonce);
+		// 	// 6 build transaction object with all the data
+		// 	const trxData2 = {
+		// 		// trx is sent from the wallet
+		// 		from: callerAccountAddress,
+		// 		// trx destination is the ERC20 token contract
+		// 		to: address,
+		// 		/** data contains the amount an recepient address params for transfer contract method */
+		// 		data,
+		// 		gas,
+		// 		gasPrice: 0,
+		// 		nonce,
+		// 	};
 
-		console.log('Transaction ready to be sent');
-		/** 7 send transaction, it'll be automatical/ly signed
-    because the provider has already the wallet **/
-		const receipt = await web3Provider.eth.sendTransaction(trxData2);
-		console.log(`Transaction sent, hash is ${receipt.transactionHash}`);
-		console.log('receipt', receipt);
+		// 	console.log('Transaction ready to be sent');
+		// 	/** 7 send transaction, it'll be automatical/ly signed
+		// because the provider has already the wallet **/
+		// 	const receipt = await web3Provider.eth.sendTransaction(trxData2);
+		// 	console.log(`Transaction sent, hash is ${receipt.transactionHash}`);
+		// 	console.log('receipt', receipt);
 
 		res.status(200).json({
 			data: comparedResult,
-			txHash: receipt.transactionHash,
+			// txHash: receipt.transactionHash,
 		});
 		// console.log(finalEncryptedData);
 		// if(!callerPrivateKey|| !appName || !tableName || !typeOfScript || !releaseVersion || !encryptedData || !callerAccountAddress){
