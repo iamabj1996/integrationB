@@ -230,17 +230,17 @@ function compareArrays(arr1, arr2) {
 		let sysIdChange = [];
 		let scriptChangeAt = [];
 		for (let i = 0; i < arr1.length; i++) {
-			console.log('this ran 3', JSON.parse(arr1[i]).sys_id);
-			console.log('objects', arr1[i].sys_id);
-			if (JSON.parse(arr1[i]).sys_id !== JSON.parse(arr2[i]).sys_id) {
-				console.log('change in this sys_id', arr1[i].sys_id, arr2[i].sys_id);
-				sysIdChange.push(JSON.parse(arr1[i]).sys_id);
+			console.log('this ran 3', JSON.parse(arr1[i]).sysId);
+			console.log('objects', arr1[i].sysId);
+			if (JSON.parse(arr1[i]).sysId !== JSON.parse(arr2[i]).sysId) {
+				console.log('change in this sys_id', arr1[i].sysId, arr2[i].sysId);
+				sysIdChange.push(JSON.parse(arr1[i]).sysId);
 			}
 			sysIdChanges = sysIdChange;
 
 			if (JSON.parse(arr1[i]).script !== JSON.parse(arr2[i]).script) {
-				console.log('change in the script for sysId with', arr1[i].sys_id);
-				scriptChangeAt.push(JSON.parse(arr1[i]).sys_id);
+				console.log('change in the script for sysId with', arr1[i].sysId);
+				scriptChangeAt.push(JSON.parse(arr1[i]).sysId);
 			}
 			scriptChangeAts = scriptChangeAt;
 		}
