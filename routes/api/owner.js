@@ -312,7 +312,7 @@ router.post('/compare', async (req, res) => {
 		);
 		console.log('compared FOR SI', comparedResultForSI);
 
-		const stringArrayCS = JSON.stringify(Object.values(trx1)[3]);
+		const stringArrayCS = JSON.stringify(Object.values(trx)[3]);
 		// console.log(JSON.parse(stringArray));
 		const toBeComparedDataCS = JSON.parse(stringArrayCS);
 		const comparedResultForCS = compareArrays(
@@ -321,7 +321,7 @@ router.post('/compare', async (req, res) => {
 		);
 		console.log('compared FOR CS', comparedResultForCS);
 
-		const stringArrayBR = JSON.stringify(Object.values(trx1)[4]);
+		const stringArrayBR = JSON.stringify(Object.values(trx)[4]);
 		// console.log(JSON.parse(stringArray));
 		const toBeComparedDataBR = JSON.parse(stringArrayBR);
 		const comparedResultForBR = compareArrays(
