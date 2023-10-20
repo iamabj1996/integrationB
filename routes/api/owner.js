@@ -213,14 +213,14 @@ function compareArrays(arr1, arr2) {
 	let sysIdChanges;
 	let scriptChangeAts;
 
-	console.log('arr', arr1.length, arr2.length);
+	// console.log('arr', arr1.length, arr2.length);
 
 	// check the length
 	if (arr1.length != arr2.length) {
 		totalRecords = false;
 		totalRecordsMessage = arr2.length;
 	} else {
-		console.log('this ran2');
+		// console.log('this ran2');
 		totalRecords = true;
 		totalRecordsMessage = arr2.length;
 
@@ -230,16 +230,16 @@ function compareArrays(arr1, arr2) {
 		let sysIdChange = [];
 		let scriptChangeAt = [];
 		for (let i = 0; i < arr1.length; i++) {
-			console.log('this ran 3', JSON.parse(arr1[i]).sysId);
-			console.log('objects', arr1[i].sysId);
+			// console.log('this ran 3', JSON.parse(arr1[i]).sysId);
+			// console.log('objects', arr1[i].sysId);
 			if (JSON.parse(arr1[i]).sysId !== JSON.parse(arr2[i]).sysId) {
-				console.log('change in this sys_id', arr1[i].sysId, arr2[i].sysId);
+				// console.log('change in this sys_id', arr1[i].sysId, arr2[i].sysId);
 				sysIdChange.push(JSON.parse(arr1[i]).sysId);
 			}
 			sysIdChanges = sysIdChange;
 
 			if (JSON.parse(arr1[i]).script !== JSON.parse(arr2[i]).script) {
-				console.log('change in the script for sysId with', arr1[i].sysId);
+				// console.log('change in the script for sysId with', arr1[i].sysId);
 				scriptChangeAt.push(JSON.parse(arr1[i]).sysId);
 			}
 			scriptChangeAts = scriptChangeAt;
@@ -302,7 +302,6 @@ router.post('/compare', async (req, res) => {
 			.getApplicationByReleaseAndName(releaseLabel, appName)
 			.call({ from: callerAccountAddress });
 		// console.log('trx',Object.values(trx)[1]);
-		console.log('trx', trx);
 		const stringArraySI = JSON.stringify(Object.values(trx)[2]);
 		// console.log(JSON.parse(stringArray));
 		const toBeComparedDataSI = JSON.parse(stringArraySI);
@@ -328,7 +327,7 @@ router.post('/compare', async (req, res) => {
 			finalEncryptedBR,
 			toBeComparedDataBR
 		);
-		console.log('compared FOR CS', comparedResultForBR);
+		console.log('compared FOR BR', comparedResultForBR);
 
 		const { totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts } =
 			comparedResultForSI;
