@@ -303,9 +303,10 @@ router.post('/compare', async (req, res) => {
 			.getApplicationByReleaseAndName(releaseLabel, appName)
 			.call({ from: callerAccountAddress });
 		// console.log('trx',Object.values(trx)[1]);
+		console.log('trx', trx);
 		const stringArraySI = JSON.stringify(Object.values(trx)[2]);
 		// console.log(JSON.parse(stringArray));
-		const toBeComparedDataSI = JSON.parse(stringArray);
+		const toBeComparedDataSI = JSON.parse(stringArraySI);
 		console.log('finalEncryptedData', finalEncryptedSI);
 		console.log('tobeComparedData', toBeComparedDataSI);
 		const comparedResultForSI = compareArrays(
