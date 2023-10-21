@@ -152,9 +152,9 @@ router.post('/storeTableData', async (req, res) => {
 		const trx = tokenContract.methods.addApplicationData(
 			applicationName,
 			releaseLabel,
-			['13131'],
-			['13131'],
-			['13131'],
+			finalEncryptedSI,
+			finalEncryptedCS,
+			finalEncryptedBR,
 			1,
 			2,
 			2
