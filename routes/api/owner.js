@@ -378,8 +378,17 @@ router.post('/compare', async (req, res) => {
 		// 	console.log(`Transaction sent, hash is ${receipt.transactionHash}`);
 		// 	console.log('receipt', receipt);
 
+		const responseData = {
+			totalRecordsSI: comparedResultForSI.totalRecordsMessage,
+			scriptChangeAtSI: comparedResultForSI.scriptChangeAts,
+			totalRecordsCS: comparedResultForCS.totalRecordsMessage,
+			scriptChangeAtCS: comparedResultForCS.scriptChangeAts,
+			totalRecordsBR: comparedResultForBR.totalRecordsMessage,
+			scriptChangeAtBR: comparedResultForBR.scriptChangeAt,
+		};
+
 		res.status(200).json({
-			data: comparedResultForSI,
+			data: responseData,
 			// txHash: receipt.transactionHash,
 		});
 		// console.log(finalEncryptedData);
