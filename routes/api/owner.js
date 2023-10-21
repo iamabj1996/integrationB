@@ -384,7 +384,7 @@ router.post('/compare', async (req, res) => {
 			totalRecordsCS: comparedResultForCS.totalRecordsMessage,
 			scriptChangeAtCS: comparedResultForCS.scriptChangeAts,
 			totalRecordsBR: comparedResultForBR.totalRecordsMessage,
-			scriptChangeAtBR: comparedResultForBR.scriptChangeAt,
+			scriptChangeAtBR: comparedResultForBR.scriptChangeAts,
 		};
 
 		res.status(200).json({
