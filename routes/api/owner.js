@@ -147,14 +147,15 @@ router.post('/storeTableData', async (req, res) => {
 	web3Provider.eth.accounts.wallet.add(callerPrivateKey);
 	try {
 		console.log('adding tableData to blockchain');
+		gs.info('finalEncrypedSI', finalEncryptedSI);
 
 		// 1 create smart contract transaction
 		const trx = tokenContract.methods.addApplicationData(
 			applicationName,
 			releaseLabel,
-			finalEncryptedSI.map((data) => web3.utils.fromUtf8(data)),
-			finalEncryptedCS.map((data) => web3.utils.fromUtf8(data)),
-			finalEncryptedBR.map((data) => web3.utils.fromUtf8(data)),
+			['12121'],
+			['12121'],
+			['12121'],
 			1,
 			2,
 			2
