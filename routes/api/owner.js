@@ -264,6 +264,7 @@ router.post('/compare', async (req, res) => {
 	const {
 		releaseLabel,
 		appName,
+		companyName,
 		scriptIncludeList,
 		clientScriptsList,
 		businessRulesList,
