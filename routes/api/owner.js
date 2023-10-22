@@ -264,7 +264,6 @@ router.post('/compare', async (req, res) => {
 	const {
 		releaseLabel,
 		appName,
-		companyName,
 		scriptIncludeList,
 		clientScriptsList,
 		businessRulesList,
@@ -338,7 +337,7 @@ router.post('/compare', async (req, res) => {
 		const trx2 = await tokenContract.methods.addCompareResultData(
 			appName,
 			releaseLabel,
-			companyName,
+			'Adani',
 			comparedResultForSI,
 			comparedResultForCS,
 			comparedResultForBR,
