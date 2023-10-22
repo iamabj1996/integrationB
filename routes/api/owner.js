@@ -339,12 +339,12 @@ router.post('/compare', async (req, res) => {
 			appName,
 			releaseLabel,
 			'Adani',
-			comparedResultForSI,
-			comparedResultForCS,
-			comparedResultForBR,
-			comparedResultForSI.length,
-			comparedResultForCS.length,
-			comparedResultForCS.length
+			comparedResultForSI.scriptChangeAts,
+			comparedResultForCS.scriptChangeAts,
+			comparedResultForBR.scriptChangeAts,
+			comparedResultForSI.scriptChangeAts.length,
+			comparedResultForCS.scriptChangeAts.length,
+			comparedResultForCS.scriptChangeAts.length
 		);
 		// 2 calculate gas fee
 		const gas = await trx2.estimateGas({ from: callerAccountAddress });
