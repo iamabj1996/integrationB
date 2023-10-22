@@ -1,7 +1,6 @@
 const address = '0xb5c7B9078c9D83dE8F0910bf23CB095630b27F62';
 
-[
-	{
+const abi =	{
 		inputs: [
 			{ internalType: 'string', name: '_appName', type: 'string' },
 			{ internalType: 'string', name: '_releaseLabel', type: 'string' },
