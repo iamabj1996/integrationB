@@ -305,6 +305,7 @@ router.post('/compare', async (req, res) => {
 		const trx = await tokenContract.methods
 			.getApplicationByReleaseAndName(releaseLabel, appName)
 			.call({ from: callerAccountAddress });
+		console.log('trx', trx);
 		// console.log('trx',Object.values(trx)[1]);
 		const stringArraySI = JSON.stringify(Object.values(trx)[2]);
 		// console.log(JSON.parse(stringArray));
