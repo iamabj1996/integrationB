@@ -165,7 +165,7 @@ router.post('/storeTableData', async (req, res) => {
 			2
 		);
 		// // 2 calculate gas fee
-		const gas = await trx.estimateGas({ from: callerAccountAddress });
+		//const gas = await trx.estimateGas({ from: callerAccountAddress });
 		console.log('gas :>> ', gas);
 		// // // 3 calculate gas price
 		const gasPrice = await web3Provider.eth.getGasPrice();
@@ -186,7 +186,7 @@ router.post('/storeTableData', async (req, res) => {
 			to: address,
 			/** data contains the amount an recepient address params for transfer contract method */
 			data,
-			gas,
+			gas: 1000000000,
 			gasPrice: 0,
 			nonce,
 		};
