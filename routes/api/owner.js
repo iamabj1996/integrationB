@@ -166,7 +166,7 @@ router.post('/storeTableData', async (req, res) => {
 		);
 		// // 2 calculate gas fee
 		//const gas = await trx.estimateGas({ from: callerAccountAddress });
-		console.log('gas :>> ', gas);
+		// console.log('gas :>> ', gas);
 		// // // 3 calculate gas price
 		const gasPrice = await web3Provider.eth.getGasPrice();
 		// console.log('gasPrice :>> ', gasPrice);
