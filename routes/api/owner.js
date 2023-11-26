@@ -341,9 +341,9 @@ router.post('/compare', async (req, res) => {
 			comparedResultForSI.scriptChangeAts,
 			comparedResultForCS.scriptChangeAts,
 			comparedResultForBR.scriptChangeAts,
-			comparedResultForSI.scriptChangeAts.length,
-			comparedResultForCS.scriptChangeAts.length,
-			comparedResultForCS.scriptChangeAts.length
+			['12312'],
+			['12312'],
+			['12312']
 		);
 		// 2 calculate gas fee
 		const gas = await trx2.estimateGas({ from: callerAccountAddress });
