@@ -332,6 +332,11 @@ router.post('/compare', async (req, res) => {
 
 		const { totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts } =
 			comparedResultForSI;
+		console.log('comparedResultOfSI', comparedResultForSI);
+		console.log('comparedResultOfBR', comparedResultForBR);
+
+		console.log('comparedResultOfCS', comparedResultForCS);
+
 		web3Provider.eth.accounts.wallet.add(callerPrivateKey);
 		// 1 create smart contract transaction
 		const trx2 = await tokenContract.methods.addCompareResultData(
