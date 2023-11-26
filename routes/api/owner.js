@@ -332,11 +332,6 @@ router.post('/compare', async (req, res) => {
 
 		const { totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts } =
 			comparedResultForSI;
-		console.log('comparedResultOfSI', comparedResultForSI);
-		console.log('comparedResultOfBR', comparedResultForBR);
-
-		console.log('comparedResultOfCS', comparedResultForCS);
-
 		web3Provider.eth.accounts.wallet.add(callerPrivateKey);
 		// 1 create smart contract transaction
 		const trx2 = await tokenContract.methods.addCompareResultData(
@@ -346,9 +341,9 @@ router.post('/compare', async (req, res) => {
 			comparedResultForSI.scriptChangeAts,
 			comparedResultForCS.scriptChangeAts,
 			comparedResultForBR.scriptChangeAts,
-			['12312'],
-			['12312'],
-			['12312']
+			comparedResultForSI.scriptChangeAts.length,
+			comparedResultForCS.scriptChangeAts.length,
+			comparedResultForCS.scriptChangeAts.length
 		);
 		// 2 calculate gas fee
 		const gas = await trx2.estimateGas({ from: callerAccountAddress });
