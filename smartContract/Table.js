@@ -1,4 +1,4 @@
-const address = '0xa3790B9CdA8B79E8d7a319AC0C146e014bA3752f';
+const address = '0x0d4fa82a6482f97CaE01A3f4921CcdEeA580d14E';
 //
 const abi = [
 	{
@@ -41,9 +41,21 @@ const abi = [
 				name: '_businessRulesList',
 				type: 'string[]',
 			},
-			{ internalType: 'int256', name: '_totalScriptIncludes', type: 'int256' },
-			{ internalType: 'int256', name: '_totalClientScripts', type: 'int256' },
-			{ internalType: 'int256', name: '_totalBusinessRules', type: 'int256' },
+			{
+				internalType: 'string[]',
+				name: '_extraScriptIncludeList',
+				type: 'string[]',
+			},
+			{
+				internalType: 'string[]',
+				name: '_extraClientScriptList',
+				type: 'string[]',
+			},
+			{
+				internalType: 'string[]',
+				name: '_extraBusinessRulesList',
+				type: 'string[]',
+			},
 		],
 		name: 'addCompareResultData',
 		outputs: [],
@@ -70,9 +82,56 @@ const abi = [
 			{ internalType: 'string', name: 'appName', type: 'string' },
 			{ internalType: 'string', name: 'releaseLabel', type: 'string' },
 			{ internalType: 'string', name: 'companyName', type: 'string' },
-			{ internalType: 'int256', name: 'totalScriptIncludes', type: 'int256' },
-			{ internalType: 'int256', name: 'totalClientScripts', type: 'int256' },
-			{ internalType: 'int256', name: 'totalBusinessRules', type: 'int256' },
+			{ internalType: 'uint256', name: 'timestamp', type: 'uint256' },
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getAllComparedResults',
+		outputs: [
+			{
+				components: [
+					{ internalType: 'string', name: 'appName', type: 'string' },
+					{ internalType: 'string', name: 'releaseLabel', type: 'string' },
+					{ internalType: 'string', name: 'companyName', type: 'string' },
+					{
+						internalType: 'string[]',
+						name: 'scriptIncludeList',
+						type: 'string[]',
+					},
+					{
+						internalType: 'string[]',
+						name: 'clientScriptList',
+						type: 'string[]',
+					},
+					{
+						internalType: 'string[]',
+						name: 'businessRulesList',
+						type: 'string[]',
+					},
+					{
+						internalType: 'string[]',
+						name: 'extraScriptIncludeList',
+						type: 'string[]',
+					},
+					{
+						internalType: 'string[]',
+						name: 'extraClientScriptList',
+						type: 'string[]',
+					},
+					{
+						internalType: 'string[]',
+						name: 'extraBusinessRulesList',
+						type: 'string[]',
+					},
+					{ internalType: 'uint256', name: 'timestamp', type: 'uint256' },
+				],
+				internalType: 'struct ApplicationDataStorage.CompareResultData[]',
+				name: '',
+				type: 'tuple[]',
+			},
 		],
 		stateMutability: 'view',
 		type: 'function',
@@ -161,9 +220,7 @@ const abi = [
 			{ internalType: 'string[]', name: '', type: 'string[]' },
 			{ internalType: 'string[]', name: '', type: 'string[]' },
 			{ internalType: 'string[]', name: '', type: 'string[]' },
-			{ internalType: 'int256', name: '', type: 'int256' },
-			{ internalType: 'int256', name: '', type: 'int256' },
-			{ internalType: 'int256', name: '', type: 'int256' },
+			{ internalType: 'uint256', name: '', type: 'uint256' },
 		],
 		stateMutability: 'view',
 		type: 'function',
