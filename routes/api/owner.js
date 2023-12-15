@@ -6,7 +6,7 @@ const http = require('http');
 const { address, abi } = require('../../smartContract/Table');
 //
 const web3Provider = new Web3(
-	new Web3.providers.HttpProvider('http://54.90.78.140:8080')
+	new Web3.providers.HttpProvider('http://3.93.231.245:8080')
 );
 
 const tokenContract = new web3Provider.eth.Contract(abi, address);
