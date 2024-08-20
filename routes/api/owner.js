@@ -6,7 +6,9 @@ const http = require('http');
 const { address, abi } = require('../../smartContract/Table');
 //
 const web3Provider = new Web3(
-	new Web3.providers.HttpProvider('http://3.93.231.245:8080')
+	new Web3.providers.HttpProvider(
+		'https://377b-2405-201-37-7894-14f2-717-f13e-2040.ngrok-free.app '
+	)
 );
 
 const tokenContract = new web3Provider.eth.Contract(abi, address);
@@ -107,7 +109,7 @@ router.post('/storeTableData', async (req, res) => {
 		callerPrivateKey,
 		callerAccountAddress,
 	} = req.body;
-
+	console.log('appName', appName);
 	console.log('callerAccountPrivateKey', callerPrivateKey);
 	console.log('callerAccAddre', callerAccountAddress);
 
@@ -304,7 +306,7 @@ router.post('/compare', async (req, res) => {
 		const trx = await tokenContract.methods
 			.getApplicationByReleaseAndName(releaseLabel, appName)
 			.call({ from: callerAccountAddress });
-		console.log('trx', trx);
+		// console.log('trx111', trx);
 		// console.log('trx',Object.values(trx)[1]);
 		const stringArraySI = JSON.stringify(Object.values(trx)[2]);
 		// console.log(JSON.parse(stringArray));
@@ -313,6 +315,7 @@ router.post('/compare', async (req, res) => {
 			finalEncryptedSI,
 			toBeComparedDataSI
 		);
+		console.log('comparedResult for SI', comparedResultForSI);
 
 		const stringArrayCS = JSON.stringify(Object.values(trx)[3]);
 		// console.log(JSON.parse(stringArray));
@@ -322,6 +325,8 @@ router.post('/compare', async (req, res) => {
 			toBeComparedDataCS
 		);
 
+		console.log('comparedResult for CS', comparedResultForCS);
+
 		const stringArrayBR = JSON.stringify(Object.values(trx)[4]);
 		// console.log(JSON.parse(stringArray));
 		const toBeComparedDataBR = JSON.parse(stringArrayBR);
@@ -330,6 +335,8 @@ router.post('/compare', async (req, res) => {
 			toBeComparedDataBR
 		);
 
+		console.log('comparedResult for BR', comparedResultForBR);
+
 		const { totalRecords, totalRecordsMessage, sysIdChanges, scriptChangeAts } =
 			comparedResultForSI;
 		web3Provider.eth.accounts.wallet.add(callerPrivateKey);
@@ -337,7 +344,6 @@ router.post('/compare', async (req, res) => {
 		const trx2 = await tokenContract.methods.addCompareResultData(
 			appName,
 			releaseLabel,
-			'Adani',
 			comparedResultForSI.scriptChangeAts,
 			comparedResultForCS.scriptChangeAts,
 			comparedResultForBR.scriptChangeAts,

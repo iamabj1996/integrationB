@@ -1,4 +1,4 @@
-const address = '0x46b40014b66C0a4069577BFd631E43B9932702b1';
+const address = '0x8D74AD518c55f9a32689a9c3056D564a93467CAC';
 //
 const abi = [
 	{
@@ -29,7 +29,6 @@ const abi = [
 		inputs: [
 			{ internalType: 'string', name: '_appName', type: 'string' },
 			{ internalType: 'string', name: '_releaseLabel', type: 'string' },
-			{ internalType: 'string', name: '_companyName', type: 'string' },
 			{
 				internalType: 'string[]',
 				name: '_scriptIncludeList',
@@ -69,7 +68,6 @@ const abi = [
 		outputs: [
 			{ internalType: 'string', name: 'appName', type: 'string' },
 			{ internalType: 'string', name: 'releaseLabel', type: 'string' },
-			{ internalType: 'string', name: 'companyName', type: 'string' },
 			{ internalType: 'int256', name: 'totalScriptIncludes', type: 'int256' },
 			{ internalType: 'int256', name: 'totalClientScripts', type: 'int256' },
 			{ internalType: 'int256', name: 'totalBusinessRules', type: 'int256' },
