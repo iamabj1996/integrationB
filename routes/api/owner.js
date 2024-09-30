@@ -7,7 +7,7 @@ const { address, abi } = require('../../smartContract/Table');
 //
 const web3Provider = new Web3(
 	new Web3.providers.HttpProvider(
-		'https://58ae-2405-201-37-7894-302e-3960-d3fa-4cf2.ngrok-free.app'
+		'https://66f6-2405-201-37-7894-4dc4-6202-5687-16cf.ngrok-free.app '
 	)
 );
 
